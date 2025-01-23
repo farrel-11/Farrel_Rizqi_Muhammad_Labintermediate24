@@ -1,17 +1,19 @@
 secret_word = "boren"
 
 def hangman():
-    guesses = ""  # Initialize guesses within the function
-    while True:
+    guesses = "" 
+    chances = 6
+    while chances > 0:
         guess = input("Guess a letter: ").lower() 
         if len(guess) != 1:
-            print("Please enter only one letter.")
+            print("Enter only one letter.")
             continue
         if not ('a' <= guess <= 'z'): 
-            print("Please enter only letters.")
+            print("Enter only letters.")
             continue
         if guess in guesses:
             print("You already guessed that letter.")
+            chances -= 1
             continue
 
         guesses += guess
@@ -20,11 +22,11 @@ def hangman():
             print("Correct!")
         else:
             print("Incorrect.")
-        if all(letter in guesses for letter in secret_word):
-            print("You win!")
-            break
-        if len(guesses) == 6:
-            print("You lose! The word was:", secret_word)
-            break
+    if all(letter in guesses for letter in secret_word):
+        print(f"You win! The word was: {secret_word}")
+              
+    if chances == 0 and secret_word != guesses:
+        print(f"You lose! The word was: {secret_word}")
+        
 
 hangman()
